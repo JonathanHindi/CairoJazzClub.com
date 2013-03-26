@@ -1,0 +1,87 @@
+<?php
+// $Id: media_8tracks.module,v 1.1.2.2 2010/10/04 23:17:35 aaron Exp $
+
+/**
+ *  @file media_8tracks/media_8tracks.module
+ *
+ *  Embedded Audio Field provider file for 8tracks.com.
+ */
+
+// A registry of variable_get defaults.
+include_once('includes/media_8tracks.variables.inc');
+
+/**
+ * Implementation of hook_menu().
+ */
+function media_8tracks_menu() {
+  return array(
+    'admin/settings/media_8tracks' => array(
+      'title' => 'Media: 8Tracks',
+      'description' => 'Administer the Media: 8Tracks module.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('media_8tracks_settings'),
+      'access arguments' => array('administer site configuration'),
+      'file' => 'includes/media_8tracks.admin.inc',
+    ),
+  );
+}
+
+/**
+ * Implementation of Embedded Media Field's hook_emfield_providers().
+ */
+function media_8tracks_emfield_providers($module, $provider = NULL) {
+  if ($module == 'emaudio' && (!isset($provider) || ($provider == '8tracks'))) {
+    static $path;
+    // Cache the result for later.
+    if (!isset($path)) {
+      $found = drupal_system_listing("$provider\.inc$", drupal_get_path('module', 'media_8tracks') ."/includes/providers/$module", 'name', 0);
+      if (is_array($found) && !empty($found)) {
+        $path = $found;
+      }
+    }
+    return $path;
+  }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function media_8tracks_theme($existing, $type, $theme, $path) {
+  return array(
+    'media_8tracks' => array(
+      'arguments' => array('media' => NULL, 'options' => array()),
+      'file' => 'media_8tracks.theme.inc',
+      'path' => $path .'/themes',
+      'template' => 'media-8tracks',
+    ),
+  );
+}
+
+function media_8tracks_metadata($media) {
+  // Initialize the data array.
+  $data = array();
+
+  // We are using oEmbed to retrieve a standard set of data from the provider.
+  // You should change the URL as specified by the 8tracks provider.
+  // If the 8tracks provider does not support oEmbed, you must remove this
+  // section entirely, or rewrite it to use their API.
+  // See http://oembed.com/ for for information.
+  $data = emfield_request_xml('8tracks', 'http://8tracks.com/mixes/'. $media .'.xml', array(), TRUE, FALSE, $media);
+
+  // Create some version control. Thus if we make changes to the data array
+  // down the road, we can respect older content. If allowed by Embedded Media
+  // Field, any older content will automatically update this array as needed.
+  // In any case, you should account for the version if you increment it.
+  $data['media_8tracks_version'] = MEDIA_8TRACKS_DATA_VERSION;
+
+  $data['media_8tracks_thumbnail'] = $data['MIX'] ? $data['MIX']['COVER-URLS']['ORIGINAL'][0] : '';
+
+  // This stores a URL to the audio's thumbnail.
+
+  return $data;
+}
+
+function media_8tracks_thumbnail($media) {
+  $data = media_8tracks_metadata($media);
+  return $data['media_8tracks_thumbnail'];
+}

@@ -1,0 +1,82 @@
+<?php
+
+
+function custom_block_nodes_attach_js($file,$module = 'custom_block_nodes') {
+	return drupal_add_js('module',$module)."/$file.js";
+}
+
+
+function custom_block_nodes_form_alter($form,&$form_state,$form_id) {
+	//echo "form id for view is------------";
+	//print $form_id."<br/>";
+	//if($form['#id'] ==
+	if($form_id == 'webform_client_form_433') {
+		//echo "<pre>";print_r($form);echo "</pre>";exit;
+	}
+	else if($form_id == 'block_admin_configure') {
+		
+		
+		
+		//echo "<pre>";
+		//print_r($form);
+		//echo "sssssssssssssssssshikssssssssssssssssssssssss";
+		//print $form_id;
+		$query = db_query('SELECT title, nid FROM {node}');
+		while($res = db_fetch_array($query)) {
+			//print_r($res);
+			$options[$res['nid']] = $res['title'];
+		}
+		$form['node_checkboxes'] = array(
+			'#title' => t('Select Nodes'),
+			'#type' => 'select',//'checkboxes',
+			'#options' => $options,
+			'#multiple' => true,
+			//'#attributes' => array('class' => array('custom_node_block_checkbox')),
+		);
+		
+		$form['#attached']['js'] = drupal_add_js('sites/all/modules/custom_block_nodes/custom_block_nodes.js');
+		
+		//echo "</pre>";
+		
+		//$resulted_views = views_get_all_views($reset = FALSE);
+		//echo "<pre>";
+		//print_r($resulted_views);
+		//echo "</pre>";
+		
+	}
+	elseif($form_id == "views_ui_preview_form") {
+		//echo "<pre>previewform is<br>";
+		//	print_r($form);
+		//echo "</pre>";
+		$query = db_query('SELECT node.title AS node_title, node_revisions.body AS node_revisions_body, node_revisions.format AS node_revisions_format, node_data_field_dish_price.field_dish_price_value AS node_data_field_dish_price_field_dish_price_value, node.type AS node_type, node.nid AS nid, node.vid AS node_vid, node.sticky AS node_sticky, node.created AS node_created, node_weight.sticky AS node_weight_sticky FROM node node  INNER JOIN content_type_food node_data_field_food_type ON node.vid = node_data_field_food_type.vid LEFT JOIN node_revisions node_revisions ON node.vid = node_revisions.vid LEFT JOIN content_type_food node_data_field_dish_price ON node.vid = node_data_field_dish_price.vid LEFT JOIN node node_weight ON node.nid = node_weight.nid WHERE (node.type in ("food")) AND (node_data_field_food_type.field_food_type_value = "121") ORDER BY node_sticky DESC, node_created DESC, node_weight_sticky DESC');
+		$r = db_fetch_array($query);
+		$num_rows_view = count($r);
+		
+		$form['height_rem'] = array(
+			'#type' => 'textfield',
+			'#title' => 'Rows in a view',
+			'#value' => $num_rows_view,
+			'#attributes' => array('disabled' => 'disabled'),
+		);
+
+		$form['occupied_height'] = array(
+			'#type' => 'textfield',
+			'#title' => 'Occupied Height',
+			
+		);
+		
+		$form['reamining_height'] = array(
+			'#type' => 'textfield',
+			'#title' => 'Remaining Height',
+		);
+		$form['#attached']['js'] = drupal_add_js('sites/all/modules/custom_block_nodes/custom_block_nodes_view.js');
+		
+		
+		//print count($r);
+		//$view = views_get_view('ex');
+		//echo "<pre>current view is--------<br/>";
+		//print_r($view);
+		//echo "</pre>";
+		//print "total_num_of_rows".count($view->result);
+	}
+}

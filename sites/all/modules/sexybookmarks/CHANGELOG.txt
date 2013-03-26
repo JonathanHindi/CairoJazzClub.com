@@ -1,0 +1,16 @@
+// $Id: CHANGELOG.txt,v 1.3 2010/04/07 10:31:22 deciphered Exp $
+
+SexyBookmarks 6.x-1.1, 2010-04-07
+---------------------------------
+
+- #737576: Added support for private filesystems.
+- #725596: Added a SexyBookmark block for manual positioning.
+- #725174: Fixed CSS and JS for manual positioning.
+- Added 13 partial translations (ported).
+- Fixed to better allow multiple instances of SexyBookmarks.
+
+
+SexyBookmarks 6.x-1.0, 2010-02-12
+---------------------------------
+
+- Initial 6.x release.

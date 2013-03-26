@@ -1,0 +1,153 @@
+<?php
+// $Id: theme_setter.module,v 0.0.1 2008/09/08 13:50:12 Stalski Exp $
+
+/**
+ * Implementation of hook_help().
+*/
+function theme_setter_help($path, $arg) {
+  $output = '';
+  switch ($path) {
+    case "admin/help#theme_setter":
+      $output .= '<p>'.  t("Allow settings to enforce the front theme to be used for content-types and/or roles of your choice."). '</p>';
+      break;
+  }
+  return $output;
+}
+
+
+/**
+ * Implementation of hook_perm().
+ */
+function theme_setter_perm() {
+  return array('administer theme setter');
+}
+
+
+/**
+ * Implementation of hook_menu().
+ *
+ * @desc		fires the administer form for theme setter
+ * @return 	array menu items
+ */
+function theme_setter_menu() {
+  $items = array();
+  $items['admin/settings/themesetter'] = array(
+    'title' => 'Theme setter',
+    'description' => 'Allows the site administer to set front theme specifically for content-types and/or roles.',
+    'file' => 'theme_setter.admin.inc',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('theme_setter_form'),
+    'access callback' => 'user_access',
+    'access arguments' => array('administer theme setter'),
+  );
+  return $items;
+}
+
+
+/**
+ * Rule to check if the content type is a form with add/edit actions
+ *
+ * @ todo     Avoid the node_load so soon in the process.
+ * @ return   boolean false on rule failure or string content-type for success
+ */
+function _check_nodeform_rule() {
+  // get some variables to build logic on
+  $arg0 = arg(0);
+  $arg1 = arg(1);
+  $arg2 = arg(2);
+  $content_type = false;
+  if($arg0 == 'node') {
+    // edit form node
+  	if(is_numeric($arg1)) {
+      $nid = (int)$arg1;
+      $node = node_load($nid);
+      $content_type = $node->type;
+    }
+    // add form node
+    elseif($arg1 == 'add')  {
+      $content_type = $arg2;
+    }
+  }
+  return $content_type;
+}
+
+
+/**
+ * Rule to check if a role or content-type rule and if so, in which order
+ *
+ * @param		content-type
+ * @return 	boolean indicating frontend enforcement
+ */
+function _theme_setter_rule($content_type) {
+  global $user;
+  $flag = false;
+  $use_content_type_rule = false;
+  $use_roles_rule = false;
+	$front_types = _get_front_content_types();
+	$use_content_type_rule = array_key_exists($content_type, $front_types);
+  $theme_role_select = variable_get('theme_setter_role_select', array() );
+  $user_roles = $user->roles;
+  foreach($user->roles as $roles_id => $role_hook) {
+    if(array_key_exists($roles_id, $theme_role_select) && in_array($roles_id, $theme_role_select)) {
+    	$use_roles_rule = true;
+    }
+  }
+	//drupal_set_message('Content-type rule: '.$use_content_type_rule.'<br />Roles rule: '.$use_roles_rule. '.');
+  if(variable_get('theme_setter_override', false)) {
+  	$flag = $use_roles_rule;
+  } else {
+    $flag = $use_content_type_rule;
+  }
+  return $flag;
+}
+
+
+/**
+ * Implementation of hook_init().
+ */
+function theme_setter_init() {  
+  global $conf;  
+  // Get the theme settings
+  $theme_default = variable_get('theme_default', 'garland');
+  $admin_theme = variable_get('admin_theme', 'garland');
+  $node_admin_theme = variable_get('node_admin_theme', 0);
+
+  if($node_admin_theme) {
+  	variable_set('node_admin_theme', 0);
+  }
+  if($content_type = _check_nodeform_rule())  { 
+		if(_theme_setter_rule($content_type) ) {
+      $conf['node_admin_theme'] = 0;
+      $conf['admin_theme'] = $theme_default;
+      // I had a bug and this fixed it.  But I could not 
+      // reproduce the mistake in theme display        
+      //init_theme();  
+    }
+    else {
+      $conf['node_admin_theme'] = 1;
+      $conf['admin_theme'] = $admin_theme;          
+      $conf['theme_default'] = $admin_theme; // this fixed it      
+      //$themes = list_themes();          
+      //_init_theme($themes[$admin_theme]);          
+    }
+  }
+}
+
+
+/**
+ * Get content types where frontend theme is forced
+ *
+ * @return array front content-types
+ */
+function _get_front_content_types() {
+  // Get all content-types to use theme_default
+  $content_types = variable_get('theme_setter_contenttypes_select', array() );
+  $front_types = array();
+  foreach($content_types as $key => $value){
+    if( $value != '0') {
+      $front_types[$key] = $value;
+    }
+  }
+  return $front_types;
+}
+?>

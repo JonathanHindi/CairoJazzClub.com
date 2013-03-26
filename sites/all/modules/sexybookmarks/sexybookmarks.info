@@ -1,0 +1,12 @@
+; $Id: sexybookmarks.info,v 1.1 2010/02/12 07:06:31 deciphered Exp $
+name = SexyBookmarks
+description = Adds a fantastic looking, customizable social networking bookmark widget.
+core = 6.x
+dependencies[] = jquery_ui
+
+; Information added by drupal.org packaging script on 2010-04-07
+version = "6.x-1.1"
+core = "6.x"
+project = "sexybookmarks"
+datestamp = "1270636507"
+

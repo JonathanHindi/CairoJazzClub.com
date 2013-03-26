@@ -1,0 +1,458 @@
+# $Id: sexybookmarks.ro.po,v 1.1 2010/02/23 06:53:23 deciphered Exp $
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  sexybookmarks.admin.inc,v 1.1 2010/02/12 07:06:31 deciphered
+#  sexybookmarks.inc,v 1.1 2010/02/12 07:06:31 deciphered
+#  sexybookmarks.module,v 1.1 2010/02/12 07:06:31 deciphered
+#  sexybookmarks.info,v 1.1 2010/02/12 07:06:31 deciphered
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2010-02-15 13:58+1100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: Ghenciu Ciprian <g.ciprian@osn.ro>\n"
+"Language-Team: Josh Jones, Norman Yung <info@sexybookmarks.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: sexybookmarks.admin.inc:20
+msgid "All"
+msgstr ""
+
+#: sexybookmarks.admin.inc:21
+msgid "None"
+msgstr ""
+
+#: sexybookmarks.admin.inc:22
+msgid "Most Popular"
+msgstr ""
+
+#: sexybookmarks.admin.inc:26
+msgid "Enabled Networks"
+msgstr "Rețele activate"
+
+#: sexybookmarks.admin.inc:27
+msgid "Select"
+msgstr ""
+
+#: sexybookmarks.admin.inc:27
+msgid "Select the Networks to display. Drag to reorder."
+msgstr "Selectați Rețelele de afișat. Trageți pentru a reordona."
+
+#: sexybookmarks.admin.inc:71
+msgid "Background image options"
+msgstr ""
+
+#: sexybookmarks.admin.inc:88
+msgid "Use a background image"
+msgstr "Utilizaţi o imagine pentru fundal"
+
+#: sexybookmarks.admin.inc:100
+msgid "Menu placement"
+msgstr "Plasare meniu"
+
+#: sexybookmarks.admin.inc:104
+msgid "Content types"
+msgstr ""
+
+#: sexybookmarks.admin.inc:110
+msgid "Menu location (in relation to content)"
+msgstr ""
+
+#: sexybookmarks.admin.inc:112
+msgid "Above content"
+msgstr "Deasupra conţinutului"
+
+#: sexybookmarks.admin.inc:113
+msgid "Below content"
+msgstr "Sub conţinut"
+
+#: sexybookmarks.admin.inc:122
+msgid "Display in nodes"
+msgstr ""
+
+#: sexybookmarks.admin.inc:124
+msgid "Teaser view"
+msgstr ""
+
+#: sexybookmarks.admin.inc:125
+msgid "Full-page view"
+msgstr ""
+
+#: sexybookmarks.admin.inc:126
+msgid "Teaser and full-page view"
+msgstr ""
+
+#: sexybookmarks.admin.inc:134
+msgid "General options"
+msgstr ""
+
+#: sexybookmarks.admin.inc:138
+msgid "Animate-expand multi-lined bookmarks"
+msgstr "Expandare animată a marcajelor multi-linie"
+
+#: sexybookmarks.admin.inc:140;152;164
+msgid "Yes"
+msgstr "Da"
+
+#: sexybookmarks.admin.inc:141;153;165
+msgid "No"
+msgstr "Nu"
+
+#: sexybookmarks.admin.inc:150
+msgid "Add nofollow to the links"
+msgstr "Adăugare nofollow la legături"
+
+#: sexybookmarks.admin.inc:162
+msgid "Open links in new window"
+msgstr "Deschidere legături în fereastră nouă"
+
+#: sexybookmarks.admin.inc:176
+msgid "Additional settings"
+msgstr ""
+
+#: sexybookmarks.admin.inc:182
+msgid "!title settings"
+msgstr ""
+
+#: sexybookmarks.admin.inc:197
+msgid "Save changes"
+msgstr "Salvare modificări"
+
+#: sexybookmarks.admin.inc:215
+msgid "Check this box to include !title in your bookmarking menu!language"
+msgstr ""
+
+#: sexybookmarks.admin.inc:244
+msgid "Your changes have been saved successfully!"
+msgstr "Modificările dvs. au fost salvate cu succes!"
+
+#: sexybookmarks.inc:41;124;213;280;340;346;352;357;410;425;435;441;462
+msgid "Submit this to !title"
+msgstr "Promovați pe !title"
+
+#: sexybookmarks.inc:46;51;66;109;114;129;163;193;198;203;240;250;310;362;367;388;452;472;492;502;508;518;529;544
+msgid "Share this on !title"
+msgstr "Partajați pe !title"
+
+#: sexybookmarks.inc:56
+msgid "Digg this!"
+msgstr "Digg this!"
+
+#: sexybookmarks.inc:61
+msgid "Post this on !title"
+msgstr "Postați pe !title"
+
+#: sexybookmarks.inc:71
+msgid "Buzz up!"
+msgstr "Buzz up!"
+
+#: sexybookmarks.inc:75
+msgid "Default content category"
+msgstr "Categoria implicită pentru conținut"
+
+#: sexybookmarks.inc:78;225
+msgid "Entertainment"
+msgstr "Distracție"
+
+#: sexybookmarks.inc:79;224
+msgid "Lifestyle"
+msgstr "Stil de viață"
+
+#: sexybookmarks.inc:80
+msgid "Health"
+msgstr "Sănătate"
+
+#: sexybookmarks.inc:81
+msgid "U.S. News"
+msgstr "Știri S.U."
+
+#: sexybookmarks.inc:82
+msgid "Business"
+msgstr "Afaceri"
+
+#: sexybookmarks.inc:83
+msgid "Politics"
+msgstr "Politică"
+
+#: sexybookmarks.inc:84
+msgid "Sci/Tech"
+msgstr "Sci/Tech"
+
+#: sexybookmarks.inc:85
+msgid "World"
+msgstr "Lume"
+
+#: sexybookmarks.inc:86;226
+msgid "Sports"
+msgstr "Sport"
+
+#: sexybookmarks.inc:87
+msgid "Travel"
+msgstr "Călătorii"
+
+#: sexybookmarks.inc:91
+msgid "Default media type"
+msgstr ""
+
+#: sexybookmarks.inc:94
+msgid "Text"
+msgstr "Text"
+
+#: sexybookmarks.inc:95
+msgid "Image"
+msgstr "Imagine"
+
+#: sexybookmarks.inc:96
+msgid "Audio"
+msgstr "Audio"
+
+#: sexybookmarks.inc:97
+msgid "Video"
+msgstr "Video"
+
+#: sexybookmarks.inc:104
+msgid "Stumble upon something good? Share it on !title"
+msgstr "Ați dat peste ceva interesant? Partajați-l pe !title"
+
+#: sexybookmarks.inc:119;300;325;482
+msgid "Post this to !title"
+msgstr "Postați la !title"
+
+#: sexybookmarks.inc:134
+msgid "Tweet this!"
+msgstr "Tweet this!"
+
+#: sexybookmarks.inc:139
+msgid "Twitter ID"
+msgstr "ID Twitter"
+
+#: sexybookmarks.inc:147
+msgid "an 'Email to a Friend' link"
+msgstr ""
+
+#: sexybookmarks.inc:148
+msgid "Email this to a friend?"
+msgstr ""
+
+#: sexybookmarks.inc:149
+msgid "I thought this article might interest you."
+msgstr ""
+
+#: sexybookmarks.inc:149;154
+msgid "You can read the full article here"
+msgstr ""
+
+#: sexybookmarks.inc:153
+msgid "Suggest this article to !title"
+msgstr ""
+
+#: sexybookmarks.inc:154
+msgid "New tip submitted via the SexyBookmarks Plugin!"
+msgstr ""
+
+#: sexybookmarks.inc:154
+msgid "I would like to submit this article"
+msgstr ""
+
+#: sexybookmarks.inc:154
+msgid "for possible inclusion on ToMuse."
+msgstr ""
+
+#: sexybookmarks.inc:168
+msgid "Seed this on !title"
+msgstr "Contribuiți la !title"
+
+#: sexybookmarks.inc:173;178;183;188;256;262;268;274;295;477;497;524
+msgid "Add this to !title"
+msgstr "Adăugați la !title"
+
+#: sexybookmarks.inc:208
+msgid "Mark this on !title"
+msgstr "Marcați pe !title"
+
+#: sexybookmarks.inc:217
+msgid "Primary content category"
+msgstr "Categorie primară pentru conținut"
+
+#: sexybookmarks.inc:220
+msgid "Technology"
+msgstr "Tehnologie"
+
+#: sexybookmarks.inc:221
+msgid "World & Business"
+msgstr "Mapamond & Afaceri"
+
+#: sexybookmarks.inc:222
+msgid "Science"
+msgstr "Știință"
+
+#: sexybookmarks.inc:223
+msgid "Gaming"
+msgstr "Jocuri"
+
+#: sexybookmarks.inc:227
+msgid "Offbeat"
+msgstr "Offbeat"
+
+#: sexybookmarks.inc:228
+msgid "Internet"
+msgstr "Internet"
+
+#: sexybookmarks.inc:232
+msgid "Default tags"
+msgstr "Cuvinte cheie implicite"
+
+#: sexybookmarks.inc:234
+msgid "Enter a comma separated list of general tags which describe your site's posts as a whole. Try not to be too specific, as one post may fall into different *tag categories* than other posts."
+msgstr "Introduceți un șir de cuvinte cheie separate prin virgulă, care pot descrie unitar articolele din site. Încercaţi să nu fiţi foarte specific, deoarece un articol poate cădea în altă *categorie cheie* decât alt articol."
+
+#: sexybookmarks.inc:245
+msgid "Moo this on !title"
+msgstr "Moo this on !title"
+
+#: sexybookmarks.inc:252;258;264;270;276
+msgid "Russian"
+msgstr "Rusă"
+
+#: sexybookmarks.inc:285
+msgid "Send this page to !title"
+msgstr ""
+
+#: sexybookmarks.inc:290
+msgid "Bump this on !title"
+msgstr ""
+
+#: sexybookmarks.inc:305
+msgid "Save this to !title"
+msgstr ""
+
+#: sexybookmarks.inc:315
+msgid "Tip this to !title"
+msgstr ""
+
+#: sexybookmarks.inc:320
+msgid "Sphinn this on !title"
+msgstr ""
+
+#: sexybookmarks.inc:330
+msgid "Grind this! on !title"
+msgstr ""
+
+#: sexybookmarks.inc:335
+msgid "Ping this on !title"
+msgstr ""
+
+#: sexybookmarks.inc:342;348
+msgid "Dutch"
+msgstr ""
+
+#: sexybookmarks.inc:372
+msgid "Blend this!"
+msgstr ""
+
+#: sexybookmarks.inc:377
+msgid "Add this to !title!"
+msgstr ""
+
+#: sexybookmarks.inc:379
+msgid "Polish"
+msgstr ""
+
+#: sexybookmarks.inc:383
+msgid "Engage with this article!"
+msgstr ""
+
+#: sexybookmarks.inc:393
+msgid "Push this on !title"
+msgstr ""
+
+#: sexybookmarks.inc:395
+msgid "Swedish"
+msgstr ""
+
+#: sexybookmarks.inc:399
+msgid "Bookmarks this on !title"
+msgstr ""
+
+#: sexybookmarks.inc:401
+msgid "Japanese"
+msgstr ""
+
+#: sexybookmarks.inc:405
+msgid "Store this link on !title"
+msgstr ""
+
+#: sexybookmarks.inc:415
+msgid "Add to a lense on !title"
+msgstr ""
+
+#: sexybookmarks.inc:420
+msgid "Submit this story to !title"
+msgstr ""
+
+#: sexybookmarks.inc:430
+msgid "Clip this to !title"
+msgstr ""
+
+#: sexybookmarks.inc:437;443
+msgid "Spanish"
+msgstr ""
+
+#: sexybookmarks.inc:447
+msgid "Submit this link to !title"
+msgstr ""
+
+#: sexybookmarks.inc:457
+msgid "Submit tip to !title"
+msgstr ""
+
+#: sexybookmarks.inc:467
+msgid "Promote this on !title"
+msgstr ""
+
+#: sexybookmarks.inc:487
+msgid "Blog this on !title"
+msgstr ""
+
+#: sexybookmarks.inc:504
+msgid "Estonian"
+msgstr ""
+
+#: sexybookmarks.inc:513
+msgid "Add this link to !title"
+msgstr ""
+
+#: sexybookmarks.inc:520
+msgid "Italian"
+msgstr ""
+
+#: sexybookmarks.inc:534
+msgid "Spring this on !title"
+msgstr ""
+
+#: sexybookmarks.inc:539
+msgid "Box this on !title"
+msgstr ""
+
+#: sexybookmarks.module:15
+msgid "administer sexybookmarks"
+msgstr ""
+
+#: sexybookmarks.module:25 sexybookmarks.info:0
+msgid "SexyBookmarks"
+msgstr ""
+
+#: sexybookmarks.module:26
+msgid "Administer SexyBookmarks."
+msgstr ""
+
+#: sexybookmarks.info:0
+msgid "Adds a fantastic looking, customizable social networking bookmark widget."
+msgstr ""
+

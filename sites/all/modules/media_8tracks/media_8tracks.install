@@ -1,0 +1,32 @@
+<?php
+// $Id: media_8tracks.install,v 1.1.2.1 2010/10/04 22:58:49 aaron Exp $
+
+/**
+ * @file
+ * This is Media: 8Tracks's installation, configuration, and removal file.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function media_8tracks_install() {
+  return array();
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function media_8tracks_uninstall() {
+  foreach (media_8tracks_variable_default() as $variable => $value) {
+    media_8tracks_variable_del($variable);
+  }
+  return array(array('success' => TRUE, 'query' => "Deleted all variables in the Media: 8Tracks namespace."));
+}
+
+/**
+ * Rebuild the theme.
+ */
+function media_8tracks_update_6001() {
+  drupal_rebuild_theme_registry();
+  return array();
+}

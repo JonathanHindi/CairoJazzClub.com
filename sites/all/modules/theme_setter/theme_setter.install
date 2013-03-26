@@ -1,0 +1,23 @@
+<?php
+
+// $Id: theme_setter.install,v 1.0.0.0 2008/09/18 11:16:29 Stalski Exp $
+
+/**
+ * Implementation of hook_install
+ */
+function slideshow_install() {
+  // maybe set variables for first time here
+  variable_set('theme_setter_contenttypes_select', array() );
+  variable_set('theme_setter_role_select', array() );
+  variable_set('theme_setter_override', array() );
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function slideshow_uninstall() {
+  // delete variables set in this module
+  variable_del('theme_setter_contenttypes_select');
+  variable_del('theme_setter_role_select');
+  variable_del('theme_setter_override');
+}

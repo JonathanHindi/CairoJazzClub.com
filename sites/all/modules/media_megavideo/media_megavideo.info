@@ -1,0 +1,12 @@
+;$Id: media_megavideo.info,v 1.1 2009/05/08 08:57:14 junedkazi Exp $
+name = Media: Megavideo
+description = Embedded Audio Field provider file for megavideo.com.
+core = 6.x
+dependencies[] = emvideo
+package = Media
+; Information added by drupal.org packaging script on 2010-10-14
+version = "6.x-1.2"
+core = "6.x"
+project = "media_megavideo"
+datestamp = "1287074488"
+

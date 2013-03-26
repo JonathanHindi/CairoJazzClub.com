@@ -1,0 +1,11 @@
+.main_content {
+	width:687px;
+	padding:10px;
+}
+.modules-right{
+display:none;
+}
+
+.main_content .content .nodesinblock {
+display:none;
+}

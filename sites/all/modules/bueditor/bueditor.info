@@ -1,0 +1,11 @@
+name = "BUEditor"
+description = "A plain textarea editor aiming to facilitate code writing."
+core = "6.x"
+
+
+; Information added by drupal.org packaging script on 2013-01-29
+version = "6.x-2.8"
+core = "6.x"
+project = "bueditor"
+datestamp = "1359477369"
+

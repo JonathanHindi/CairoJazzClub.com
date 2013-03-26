@@ -1,0 +1,14 @@
+name = playlist
+description = a theme for CJC  website
+version = 1.0
+core = 6.x
+engine=phptemplate
+
+regions[content] = content
+
+features[] = logo
+features[] = favicon
+features[] = name
+features[] = slogan
+
+stylesheets[all][] = style.css

@@ -1,0 +1,24 @@
+name = jazz
+description = a theme for CJC  website
+version = 1.0
+core = 6.x
+engine=phptemplate
+
+regions[right] = Right sidebar
+regions[content] = content
+regions[header] = header
+regions[footer] = footer
+regions[left] = Left sidebar
+regions[featured] = featured
+regions[player] = player
+
+features[] = logo
+features[] = favicon
+features[] = name
+features[] = slogan
+
+stylesheets[all][] = style.css
+stylesheets[all][] = highslide/highslide.css
+
+// scripts[] = js/general.js
+// 	scripts[] = js/general-band.js

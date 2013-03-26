@@ -1,0 +1,16 @@
+; $Id: media_8tracks.info,v 1.1.2.2 2011/02/23 19:16:31 aaron Exp $
+
+name = Media: 8Tracks
+description = Embedded Audio Field provider file for 8tracks.com.
+core = 6.x
+dependencies[] = emfield
+dependencies[] = emaudio
+package = Media
+
+
+; Information added by drupal.org packaging script on 2011-02-23
+version = "6.x-1.2"
+core = "6.x"
+project = "media_8tracks"
+datestamp = "1298488957"
+

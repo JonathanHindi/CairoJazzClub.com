@@ -1,0 +1,4 @@
+; $Id: theme_setter.info,v 0.0.1 2008/09/12 0:52:12 Stalski Exp $
+name = Theme setter
+description = "Forces the default frontend theme to selected content-types and roles."
+core = 6.x

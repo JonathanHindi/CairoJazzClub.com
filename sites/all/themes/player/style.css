@@ -1,0 +1,18 @@
+﻿body.admin-expanded.admin-vertical.admin-nw, 
+body.admin-expanded.admin-vertical.admin-sw{
+margin-left:0px;
+}
+
+body {
+background:#312E44;
+}
+
+.wrapper {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 290px;
+	background:none;
+	margin-top:87px;
+}

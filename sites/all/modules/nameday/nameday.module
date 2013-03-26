@@ -1,0 +1,99 @@
+<?php
+/**
+ * @file
+ * Show a block with actual date, name day and holiday if exists
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+function nameday_menu() {
+  $items = array();
+  $items['admin/settings/nameday'] = array(
+    'title' => 'Nameday',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('nameday_settings'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'nameday.admin.inc'
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_block().
+ */
+function nameday_block($op = 'list', $delta = '', $edit = array()) {
+  $blocks = array();
+  switch ($op) {
+    case 'list':
+      $blocks[0]['info'] = t("Name day");
+      return $blocks;
+    case 'view':
+      $block['subject'] = t('Name day');
+      $block['content'] = theme('nameday', _nameday_get_row());
+      return $block;
+  }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function nameday_theme() {
+  return array(
+    'nameday' => array(
+      'arguments' => array('nameday' => NULL ),
+      'template' => 'nameday',
+    )
+  );
+}
+
+function nameday_preprocess_nameday(&$variables) {
+  $variables['name'] = $variables['nameday']['name'];
+  if (variable_get('nameday_show_date', TRUE)) {
+    $variables['date'] = format_date(time(), variable_get('nameday_date_format', 'small'), variable_get('nameday_date_format_custom', ''));
+  } else {
+    $variables['date'] = FALSE;
+  }
+  if (variable_get('nameday_show_holiday', TRUE) && $variables['nameday']['holiday'] != '') {
+    $variables['holiday'] = $variables['nameday']['holiday'];
+  } else {
+    $variables['holiday'] = FALSE;
+  }
+  return "kukuts";
+}
+/**
+ * return the current day database row-array
+ */
+function _nameday_get_row() {
+  global $language;
+  static $result = NULL;
+  if (!$result) {
+    //setting the current timestamp with timezone
+    $time = format_date(time(), 'custom', 'U');
+    $date = getdate($time);
+    $result = db_fetch_array(db_query("SELECT * FROM {nameday} WHERE month=%d AND day=%d AND language='%s'", $date["mon"], $date["mday"], $language->language));
+  }
+  return $result;
+}
+
+/**
+ *
+ * Token support is early alpha.
+ *
+ * Implementation of hook_token_values().
+ */
+function nameday_token_values($type, $object = NULL, $options = array()) {
+  $result = _nameday_get_row();
+  $tokens['nameday'] = $result['name'];
+  $tokens['holiday'] = $result['holiday'];
+  return $tokens;
+}
+
+/**
+ * Implementation of hook_token_list().
+ */
+function nameday_token_list($type = 'all') {
+  $tokens[$type]['nameday'] = "Current nameday";
+  $tokens[$type]['holiday'] = "Current holiday if any";
+  return $tokens;
+}

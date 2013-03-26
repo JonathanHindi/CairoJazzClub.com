@@ -1,0 +1,13 @@
+; $Id: context_useragent_defaults.info,v 1.1.2.1 2010/11/02 22:58:40 nicholasalipaz Exp $
+name = Context Useragent Default
+description = Provides a set of default contexts which add body classes depending on the user's browser and OS.
+dependencies[] = context
+dependencies[] = context_useragent
+core = 6.x
+package = Context
+; Information added by drupal.org packaging script on 2010-11-02
+version = "6.x-1.0"
+core = "6.x"
+project = "context_useragent"
+datestamp = "1288741240"
+

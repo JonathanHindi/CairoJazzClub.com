@@ -1,0 +1,9 @@
+name = Pagination
+description = Allows arbitrary nodes to be paginated based on automatic or manual paging
+core = 6.x
+; Information added by drupal.org packaging script on 2012-05-11
+version = "6.x-1.8"
+core = "6.x"
+project = "pagination"
+datestamp = "1336767385"
+

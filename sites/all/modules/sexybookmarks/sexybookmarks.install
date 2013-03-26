@@ -1,0 +1,25 @@
+<?php
+// $Id: sexybookmarks.install,v 1.2 2010/04/07 10:31:22 deciphered Exp $
+/**
+ * @file
+ * Install, update and uninstall functions for the SexyBookmarks module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function sexybookmarks_uninstall() {
+  variable_del('sexybookmarks');
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function sexybookmarks_update_6100() {
+  $settings = _sexybookmarks_get_settings();
+  if (!is_array($settings['display']['location'])) {
+    $settings['display']['location'] = array($settings['display']['location'] => $settings['display']['location']);
+  }
+  variable_set('sexybookmarks', serialize($settings));
+  return array();
+}
