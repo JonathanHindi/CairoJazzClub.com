@@ -147,7 +147,8 @@ function popUp(URL) {
 				$nodee = node_load($niid, NULL, TRUE);
 
 				// If node is not loaded and type is not tshirt redirect to /cds
-				if( !$nodee || !$nodee->type == 'tshirt' ){
+				// arg(2) == null for passing the check when accessing the edit/submission/track and other sub pages
+				if( arg(2) == null && (!$nodee || !$nodee->type == 'tshirt') ){
 					return drupal_goto('tshirts');
 				}		
 			?>

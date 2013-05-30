@@ -147,7 +147,8 @@ function popUp(URL) {
 				$nodee = node_load($niid, NULL, TRUE);
 				
 				// If node is not loaded and type is not cds redirect to /cds
-				if( !$nodee || !$nodee->type == 'cds' ){
+				// arg(2) == null for passing the check when accessing the edit/submission/track and other sub pages
+				if( arg(2) == null && (!$nodee || !$nodee->type == 'cds') ){
 					return drupal_goto('cds');
 				}
 
