@@ -148,7 +148,7 @@ function popUp(URL) {
 
 				// If node is not loaded and type is not tshirt redirect to /cds
 				if( !$nodee || !$nodee->type == 'tshirt' ){
-					return drupal_goto('/tshirts');
+					return drupal_goto('tshirts');
 				}		
 			?>
 				<div class="views-row views-row-1 views-row-odd views-row-first views-row-last">

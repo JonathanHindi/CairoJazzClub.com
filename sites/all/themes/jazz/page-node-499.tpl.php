@@ -148,7 +148,7 @@ function popUp(URL) {
 				
 				// If node is not loaded and type is not cds redirect to /cds
 				if( !$nodee || !$nodee->type == 'cds' ){
-					return drupal_goto('/cds');
+					return drupal_goto('cds');
 				}
 
 				
