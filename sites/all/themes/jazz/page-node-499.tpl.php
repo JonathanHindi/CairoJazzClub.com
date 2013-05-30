@@ -145,7 +145,7 @@ function popUp(URL) {
 			<?php
 				
 				// Load CD Node for Teaser Details if not redirect to cds
-				$nodee = jazz_order_item_load_node($nid, 'cds');
+				$nodee = jazz_order_item_load_node(arg(1), 'cds');
 
 
 				$art_id=$nodee->field_cd_artist_name['0']['nid'];

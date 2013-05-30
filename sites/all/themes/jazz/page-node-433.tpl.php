@@ -144,7 +144,7 @@ function popUp(URL) {
 			</ul>	
 			<?php
 				// Load tshirt Node for Teaser Details if not redirect to tshirts
-				$nodee = jazz_order_item_load_node($nid, 'tshirts');
+				$nodee = jazz_order_item_load_node(arg(1), 'tshirts');
 			?>
 				<div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
 					<div class="views-field views-field-field-tshirt-image-1-fid"> 
