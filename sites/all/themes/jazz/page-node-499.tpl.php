@@ -143,8 +143,15 @@ function popUp(URL) {
 				<?php print $tabs;?>  
 			</ul>	
 			<?php
-				$niid=$_GET['nid'];				
+				$niid=$_GET['nid'];
 				$nodee = node_load($niid, NULL, TRUE);
+				
+				// If node is not loaded and type is not cds redirect to /cds
+				if( !$nodee || !$nodee->type == 'cds' ){
+					return drupal_goto('/cds');
+				}
+
+				
 				$art_id=$nodee->field_cd_artist_name['0']['nid'];
 				$artist_node=node_load($art_id, NULL, TRUE);
 			?>

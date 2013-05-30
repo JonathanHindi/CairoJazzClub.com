@@ -143,8 +143,13 @@ function popUp(URL) {
 				<?php print $tabs;?>  
 			</ul>	
 			<?php
-				$niid=$_GET['nid'];				
+				$niid=$_GET['nid'];	
 				$nodee = node_load($niid, NULL, TRUE);
+
+				// If node is not loaded and type is not tshirt redirect to /cds
+				if( !$nodee || !$nodee->type == 'tshirt' ){
+					return drupal_goto('/tshirts');
+				}		
 			?>
 				<div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
 					<div class="views-field views-field-field-tshirt-image-1-fid"> 
