@@ -143,16 +143,11 @@ function popUp(URL) {
 				<?php print $tabs;?>  
 			</ul>	
 			<?php
-				$niid=$_GET['nid'];
-				$nodee = node_load($niid, NULL, TRUE);
 				
-				// If node is not loaded and type is not cds redirect to /cds
-				// arg(2) == null for passing the check when accessing the edit/submission/track and other sub pages
-				if( arg(2) == null && (!$nodee || !$nodee->type == 'cds') ){
-					return drupal_goto('cds');
-				}
+				// Load CD Node for Teaser Details if not redirect to cds
+				$nodee = jazz_order_item_load_node($nid, 'cds');
 
-				
+
 				$art_id=$nodee->field_cd_artist_name['0']['nid'];
 				$artist_node=node_load($art_id, NULL, TRUE);
 			?>

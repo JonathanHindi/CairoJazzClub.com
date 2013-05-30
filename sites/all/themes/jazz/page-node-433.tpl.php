@@ -143,14 +143,8 @@ function popUp(URL) {
 				<?php print $tabs;?>  
 			</ul>	
 			<?php
-				$niid=$_GET['nid'];	
-				$nodee = node_load($niid, NULL, TRUE);
-
-				// If node is not loaded and type is not tshirt redirect to /cds
-				// arg(2) == null for passing the check when accessing the edit/submission/track and other sub pages
-				if( arg(2) == null && (!$nodee || !$nodee->type == 'tshirt') ){
-					return drupal_goto('tshirts');
-				}		
+				// Load tshirt Node for Teaser Details if not redirect to tshirts
+				$nodee = jazz_order_item_load_node($nid, 'tshirts');
 			?>
 				<div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
 					<div class="views-field views-field-field-tshirt-image-1-fid"> 
