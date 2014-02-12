@@ -2,9 +2,21 @@
 
 var BUE = window.BUE = window.BUE || {preset: {}, templates: {}, instances: [], preprocess: {}, postprocess: {}};
 
+// Set behaviors that must run before BUE.
+BUE.preBehaviors = {
+  textarea: !Drupal.behaviors.textarea,
+  teaser: !Drupal.behaviors.teaser
+};
+
 // Get editor settings from Drupal.settings and process preset textareas.
 Drupal.behaviors.BUE = function(context) {
-  var set = Drupal.settings.BUE, tpls = BUE.templates, pset = BUE.preset;
+  var i, behavior, set = Drupal.settings.BUE, tpls = BUE.templates, pset = BUE.preset;
+  // Check for any necessary behaviors that haven't run yet and execute them.
+  for (i in BUE.preBehaviors) {
+    if (BUE.preBehaviors[i] && (behavior = Drupal.behaviors[i])) {
+      behavior.apply(this, arguments);
+    }
+  }
   if (set) {
     $.each(set.templates, function (id, tpl) {
       tpls[id] = tpls[id] || $.extend({}, tpl);
@@ -19,22 +31,6 @@ Drupal.behaviors.BUE = function(context) {
   // Fix enter key on textfields triggering button click.
   $('input:text', context).bind('keydown.bue', BUE.eFixEnter);
 };
-
-// Make sure BUE behavior runs after textarea behavior
-if (!Drupal.behaviors.textarea) {
-  var bFunc = Drupal.behaviors.BUE;
-  Drupal.behaviors.BUE = function() {
-    var tFunc = Drupal.behaviors.textarea;
-    if (tFunc) {
-      Drupal.behaviors.textarea = function() {
-        tFunc.apply(this, arguments);
-        bFunc.apply(this, arguments);
-      };
-      Drupal.behaviors.BUE = function(){};
-    }
-    else bFunc.apply(this, arguments);
-  };
-}
 
 // Integrate editor template into textarea T
 BUE.processTextarea = function (T, tplid) {

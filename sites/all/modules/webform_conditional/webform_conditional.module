@@ -105,18 +105,21 @@ function webform_conditional_form_alter(&$form, $form_state, $form_id) {
           //take into account different systems line breaks
           $monitor_field_values = _webform_conditional_convert_textarea_lines_to_array($extra['webform_conditional_field_value']);
           if (!isset($js_fields[$rows[$extra['webform_conditional_cid']]['form_key']])) {
-            $js_fields[$rows[$extra['webform_conditional_cid']]['form_key']]['css_id'] = _webform_conditional_get_css_id($form['details']['nid']['#value'], $extra['webform_conditional_cid']);
+            $js_fields[$rows[$extra['webform_conditional_cid']]['form_key']]['cid'] = $extra['webform_conditional_cid'];
+            $cids[] = $extra['webform_conditional_cid'];
           }
           $js_fields[$rows[$extra['webform_conditional_cid']]['form_key']]['dependent_fields'][$row['form_key']] = array(
             'type' => $row['type'],
+            'cid' => $row['cid'],
             'monitor_cid' => $extra['webform_conditional_cid'],
             'monitor_field_key' => $rows[$extra['webform_conditional_cid']]['form_key'],
             'monitor_field_value' => $monitor_field_values,
             'monitor_field_trigger' => isset($extra['webform_conditional_trigger']) ? $extra['webform_conditional_trigger'] : '',
             'operator' => isset($extra['webform_conditional_operator']) ? $extra['webform_conditional_operator'] : "=",
             'default_value' => $row['value'],
-            'css_id' => _webform_conditional_get_css_id($form['details']['nid']['#value'], $row['cid']),
           );
+          $cids[] = $row['cid'];
+          
         }
         if ($row['type'] != 'fieldset' && _webform_condtional_component_is_conditional($row, $nid)) {
           //!empty($extra['webform_conditional_cid']) || ($row['pid'] != 0 && $row['mandatory'] == 1))
@@ -131,6 +134,15 @@ function webform_conditional_form_alter(&$form, $form_state, $form_id) {
     }
   }
   if (!empty($js_fields)) {
+    $cids = array_unique($cids);
+    //get alls the css_ids to be used on form
+    $css_ids = _webform_conditional_get_css_ids($cids, $form);
+    foreach ($js_fields as &$js_field) {
+      $js_field['css_id'] = $css_ids[$js_field['cid']];
+      foreach ($js_field['dependent_fields'] as &$dependent_field) {
+        $dependent_field['css_id'] = $css_ids[$dependent_field['cid']];
+      }
+    }
     //can't add javascript in this function or it will not be added if the form is built from cache.  Need to run "after_build" function
     $form['#after_build'][] = 'webform_conditional_add_js';
     $js_settings = array(
@@ -196,38 +208,50 @@ function webform_conditional_element_after_build($form_element, &$form_state) {
   //only do this when the form is being submitted NOT displayed
   if (!empty($form_element['#post'])) {
     $submitted_values = _webform_conditional_get_submitted_values($form_state);
-    //load the components into a flattened array
-    $components = _webform_conditional_get_all_components($form_element['#webform_component']['nid'], $submitted_values);
-    $was_hidden = _webform_conditional_was_hidden($form_element['#webform_component']['cid'], $components);
-    if ($was_hidden) {
-      $form_element['#required'] = FALSE;
-      _webform_condtional_clear_element_values($form_element, $form_state);
+    if (!empty($submitted_values)) {
+      //load the components into a flattened array
+      $components = _webform_conditional_get_all_components($form_element['#webform_component']['nid'], $submitted_values);
+      $was_hidden = _webform_conditional_was_hidden($form_element['#webform_component']['cid'], $components);
+      if ($was_hidden) {
+        $form_element['#required'] = FALSE;
+        _webform_condtional_clear_element_values($form_element, $form_state);
+      }
     }
   }
   return $form_element;
 
 }
 /**
+ * For an array of cids return css_ids to be used
  * This any component this return the CSS id that Webform creates for the div element that wraps a component
  * This will id will be used on the client side to show/hide components
  *
- * @param $nid
- *  Node id for a component
- * @param $cid
- *  Component id
+ * @param array $cids
+ *  Component cids shown on current page
+ * @param array $form
+ *  current form
  *
- * @return string
- *  css id
+ * @return array
+ *  keys = cids, values = css_ids
  */
-function _webform_conditional_get_css_id($nid, $cid) {
-  $components = _webform_conditional_get_all_components($nid);
-  $css_id = str_replace("_", "-", $components[$cid]['form_key']);
-  $parent_cid  = $components[$cid]['pid'];
-  while ($parent_cid) {
-    $css_id = str_replace("_", "-", $components[$parent_cid]['form_key']) . "--" . $css_id;
-    $parent_cid = $components[$parent_cid]['pid'];
+function _webform_conditional_get_css_ids($cids, $form) {
+  static $components;
+  if (!isset($components)) {
+    $nid = $form['details']['nid']['#value'];
+    $components = _webform_conditional_get_all_components($nid);
   }
-  return "webform-component-$css_id";
+  foreach ($cids as $cid) {
+    $css_id = str_replace("_", "-", $components[$cid]['form_key']);
+    $parent_cid  = $components[$cid]['pid'];
+    while ($parent_cid) {
+      $css_id = str_replace("_", "-", $components[$parent_cid]['form_key']) . "--" . $css_id;
+      $parent_cid = $components[$parent_cid]['pid'];
+    }
+    
+    $css_ids[$cid] = "webform-component-$css_id";
+  }
+  drupal_alter('webform_conditional_css_ids', $css_ids, $form);
+  return $css_ids;
 }
 /**
  * Function run #after_build on webform.  This ensures that Javascript is added even if form is built from cache.

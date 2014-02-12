@@ -116,7 +116,7 @@ function plupload_upload_page($options = array()) {
     $plupload_import_field_type = variable_get('plupload_import_field_type', 'photo:::field_photo');
   }
   // Get the field and its validators so we can build our extension list.
-  list($type, $field_name) = split(':::', $plupload_import_field_type);
+  list($type, $field_name) = explode(':::', $plupload_import_field_type);
   $field = content_fields($field_name, $type);
   $validators = imagefield_widget_upload_validators($field);
   $extensions = str_replace(' ', ',', $validators['filefield_validate_extensions'][0]);

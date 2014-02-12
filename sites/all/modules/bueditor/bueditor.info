@@ -3,9 +3,9 @@ description = "A plain textarea editor aiming to facilitate code writing."
 core = "6.x"
 
 
-; Information added by drupal.org packaging script on 2013-01-29
-version = "6.x-2.8"
+; Information added by Drupal.org packaging script on 2013-12-17
+version = "6.x-2.9"
 core = "6.x"
 project = "bueditor"
-datestamp = "1359477369"
+datestamp = "1387302421"
 

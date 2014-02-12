@@ -400,10 +400,17 @@ function theme_views_node_selector($element) {
       $headers[] = array('data' => $label, 'class' => "views-field views-field-{$vars['fields'][$field]}");
     }
     foreach ($records as $num => $object) {
-      $row = array('class' => 'rowclick', 'data' => array());
+      $vars['row_classes'][$num][] = 'rowclick';
+      $row = array('class' => implode(' ', $vars['row_classes'][$num]), 'data' => array());
       $row['data'][] =  theme('checkbox', $element['selection'][_views_bulk_operations_hash_object($object, $view)]);
       foreach ($vars['rows'][$num] as $field => $content) {
-        $row['data'][] = array('data' => $content, 'class' => "views-field views-field-{$vars['fields'][$field]}");
+        // Support field classes in Views 3, but provide a fallback for Views 2.
+        if (views_api_version() == 2) {
+          $row['data'][] = array('data' => $content, 'class' => 'views-field views-field-' . $vars['fields'][$field]);
+        }
+        else {
+          $row['data'][] = array('data' => $content, 'class' => $vars['field_classes'][$field][$num]);
+        }
       }
       $rows[] = $row;
     }

@@ -74,12 +74,10 @@ function account_profile_form_alter(&$form, $form_state, $form_id) {
           $account_form = user_profile_form(array(), $user);
           unset($account_form['submit'], $account_form['delete']); // remove duplicated Save button and Delete
           $form = array_merge($account_form, $form);
-          $form['account']['#tree'] = TRUE;
           $form['#validate'][] = 'account_profile_form_validate';
           $form['#validate'][] = 'user_validate_picture';
           $form['#submit'][] = 'account_profile_form_submit';
           $form['#submit'][] = 'account_profile_user_profile_submit';
-
       }
       /* Integration with Notifications autosubscribe module  */ 
       if (module_exists('notifications_autosubscribe')) {
@@ -114,39 +112,74 @@ function account_profile_menu_alter(&$items) {
  * Validation function for the user account and profile editing form.
  */
 function account_profile_form_validate($form, &$form_state) {
-  
-  user_module_invoke('validate', $form_state['values']['account'], $form_state['values']['_account'], $form_state['values']['_category']);
+  user_module_invoke('validate', $form_state['values'], $form_state['values']['_account'], $form_state['values']['_category']);
   // Validate the username when: user is editing own account and can change username; or an admin user
   if (($GLOBALS['user']->uid == $form['#uid'] && user_access('change own username')) || user_access('administer users')) {
-    if ($error = user_validate_name($form_state['values']['account']['name'])) {
+    if ($error = user_validate_name($form_state['clicked_button']['#post']['name'])) {
       form_set_error('name', $error);
     }
   }
+  /*
+  if (what?) {
+    watchdog('security', 'Detected malicious attempt to alter protected user fields.', array(), WATCHDOG_WARNING);
+    // set this to a value type field
+    form_set_error('category', t('Detected malicious attempt to alter protected user fields.'));
+  }
+   */
 }
 
 /**
  * Submit function for the user account and profile editing form.
  */
 function account_profile_form_submit($form, &$form_state) {
-  
-  // Prepare account data and values for user_save
   $account = $form_state['values']['_account'];
+  // add username
+  $username = $form_state['clicked_button']['#post']['name'];
+  $form_state['values']['name'] = (!empty($username)) ? $username : $account->name;
+  $form_state['values']['uid'] = $form_state['values']['account_profile_uid'];
   $category = $form_state['values']['_category'];
+  unset($form_state['values']['_account'], $form_state['values']['op'], $form_state['values']['submit'], $form_state['values']['delete'], $form_state['values']['form_token'], $form_state['values']['form_id'], $form_state['values']['_category']);
+  user_module_invoke('submit', $form_state['values'], $account, $category);
 
-  // prevent to store node values in user->data field.
-  $values = $form_state['values']['account'];
+  // prevent to store all values in user->data field.
+  $account_form_state = array();
+  module_load_include('pages.inc', 'user');
+  $account_form = user_profile_form(array(), $account);
 
-  // If username has changed, update the node's name for node_save()
-  // otherwise it doesn't find the old username
-  $form_state['values']['name'] = $form_state['values']['account']['name'];
-  
-  // Save user data
-  user_module_invoke('submit', $values, $account, $category);
-  user_save($account, $values, $category);  
+  // If $form_state['values'][<element>] exists in original user profile form, give it to $account_form_state, and separate the node_form
+  foreach ($form_state['values'] as $key => $value) {
+    if (_multi_array_key_exists($key, $account_form)) {
+      $account_form_state[$key] = $form_state['values'][$key];
+    }
+  }
+  user_save($account, $account_form_state, $category);
 
   // Clear the page cache because pages can contain usernames and/or profile information:
   cache_clear_all();
-
-  drupal_set_message(t('User Account ' . $form_state['values']['account']['name'] . ' has been updated.'));
+  drupal_set_message(t('The changes have been saved.'));
   return;
 }
+
+/**
+ * Helper function to check keys in multidimensional array.
+ * @param $needle
+ * The key
+ * @param $haystack
+ * The array to check
+ * @return boolean
+ * Return TRUE, if key is exist.
+ */
+function _multi_array_key_exists($needle, $haystack) {
+  foreach ($haystack as $key=>$value) {
+    if ($needle===$key) {
+      return $key;
+    }
+    if (is_array($value)) {
+      if(_multi_array_key_exists($needle, $value)) {
+        return $key . ":" . _multi_array_key_exists($needle, $value);
+      }
+    }
+  }
+  return FALSE;
+}
+

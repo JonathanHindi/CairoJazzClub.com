@@ -4,9 +4,9 @@ package = User Interface
 dependencies[] = tabs
 core = 6.x
 
-; Information added by drupal.org packaging script on 2011-02-25
+; Information added by drupal.org packaging script on 2013-10-19
 version = "6.x-1.x-dev"
 core = "6.x"
 project = "tabs"
-datestamp = "1298620324"
+datestamp = "1382145813"
 

@@ -5,9 +5,9 @@ package = Drupal Tweaks
 version = VERSION
 
 
-; Information added by drupal.org packaging script on 2013-01-27
+; Information added by drupal.org packaging script on 2013-09-30
 version = "6.x-1.0-alpha1+10-dev"
 core = "6.x"
 project = "drupal_tweaks"
-datestamp = "1359248776"
+datestamp = "1380571004"
 
